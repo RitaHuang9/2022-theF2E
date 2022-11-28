@@ -2,7 +2,7 @@
 .block-main {
     height: 100vh;
     position: fixed;
-    width: 100%;
+    width: 100vw;
     // z-index: 5;
 }
 
@@ -26,6 +26,17 @@
         opacity: 0;
         transform: scale(1.1);
         @include bg(finish, png, center, center, no-repeat, contain);
+    }
+}
+
+@include pad {
+    .railing {
+        &-start {
+            display: none;
+        }
+        &-end {
+            display: none;
+        }
     }
 }
 
@@ -55,14 +66,16 @@
     right: 10%;
 }
 
-.traffic-light-box {
-    position: relative;
-    height: 15vh;
-    top: 50%;
-    z-index: 5;
-}
-
 .traffic-light {
+    &-box {
+        position: relative;
+        height: 15vh;
+        top: 50%;
+        z-index: 5;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 0 0 auto;
+    }
     &-txt {
         color: $hightLight;
         font-size: 28px;
@@ -70,7 +83,7 @@
         top: 0%;
         right: 0;
         position: absolute;
-        width: 16%;
+        width: 100%;
         text-align: center;
     }
     &-frame {
@@ -82,7 +95,7 @@
     }
     &-green {
         position: absolute;
-        right: 3%;
+        right: 22%;
         top: 52%;
         height: 40px;
         z-index: -1;
@@ -90,7 +103,7 @@
     &-yellow {
         position: absolute;
         top: 50%;
-        right: 6.3%;
+        right: 45.3%;
         height: 40px;
         z-index: -1;
     }
@@ -98,8 +111,23 @@
         z-index: -1;
         position: absolute;
         top: 50%;
-        right: 9.8%;
+        right: 69%;
         height: 40px;
+    }
+}
+
+@include pad {
+    .cloud {
+        &-left {
+            left: 20px;
+            height: 20%;
+            top: 40%;
+        }
+        &-right {
+            right: 0;
+            height: 18%;
+            top: 40%;
+        }
     }
 }
 
@@ -175,6 +203,14 @@
     }
 }
 
+@include pad {
+    .characters {
+        &-person {
+            height: 25%;
+        }
+    }
+}
+
 // ---- TODO: Section01 ------------------------------------//
 .section01,
 .section02,
@@ -233,6 +269,44 @@
         width: 22px;
         height: 22px;
         margin-right: 12px;
+    }
+}
+
+@include pad {
+    .section01,
+    .section02,
+    .section03,
+    .section04,
+    .section05,
+    .section06,
+    .section07,
+    .sectionLast {
+        min-height: 800px;
+    }
+    .section01 {
+        .logo {
+            height: auto;
+            max-width: 250px;
+            margin-top: 100px;
+            margin-bottom: 20px;
+            content: url("../images/logo.png");
+        }
+        .title-main {
+            font-size: $h7;
+            padding: 4px 16px;
+            line-height: 30px;
+        }
+        .job-title {
+            margin: 20px auto 0;
+            @include flex($ai: center, $flex-d: column);
+            &-item {
+                margin-bottom: 15px;
+                font-size: $h7;
+            }
+            &-num {
+                font-size: $h6;
+            }
+        }
     }
 }
 
@@ -297,6 +371,24 @@
     }
     &-2 {
         opacity: 0;
+    }
+}
+
+@include pad {
+    .title-sub {
+        margin: 85px 0 0;
+        height: 10%;
+        &-l,
+        &-r {
+            display: none;
+        }
+        &-txt {
+            font-size: $h5;
+            line-height: 50px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
     }
 }
 

@@ -1,53 +1,85 @@
-// header-menu 左側選單
-.header-main {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: $primary;
-    z-index: 99999;
-    transform: translateX(-100%);
-    transition: all 0.5s 0.2s;
-    &.active {
-        transform: translateX(0%);
-        .header-buger {
-            @include bg(menu/btn_burger_close, png);
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background-size: contain;
-            &:hover {
-                @include bg(menu/btn_burger_close_h, png);
+.header {
+    // header-menu 左側選單
+    &-main {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: $primary;
+        z-index: 99999;
+        transform: translateX(-100%);
+        transition: all 0.5s 0.2s;
+        &.active {
+            transform: translateX(0%);
+            .header-burger {
+                @include bg(menu/btn_burger_close, png);
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                background-size: contain;
+                &:hover {
+                    @include bg(menu/btn_burger_close_h, png);
+                }
             }
         }
+        &-box {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -28px;
+            width: 40px;
+            height: 100vh;
+            @include bg(menu/bg_menuSide, png, left 10px, center, no-repeat, 20px);
+        }
     }
-    &-box {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-    }
-    &::after {
-        content: "";
+    &-burger {
         position: absolute;
-        top: 0;
-        right: -28px;
-        width: 40px;
-        height: 100vh;
-        @include bg(menu/bg_menuSide, png, left 10px, center, no-repeat, 20px);
+        transition: all 0.5s 0.2s;
+        top: 45%;
+        right: -74px;
+        width: 60px;
+        height: 60px;
+        @include cursor;
+        @include bg(menu/btn_burger_open, png, center, center, no-repeat, contain);
+        &:hover {
+            @include bg(menu/btn_burger_open_h, png, center, center, no-repeat, contain);
+        }
     }
-}
-
-.header-buger {
-    position: absolute;
-    transition: all 0.5s 0.2s;
-    top: 45%;
-    right: -74px;
-    width: 60px;
-    height: 60px;
-    @include cursor;
-    @include bg(menu/btn_burger_open, png, center, center, no-repeat, contain);
-    &:hover {
-        @include bg(menu/btn_burger_open_h, png, center, center, no-repeat, contain);
+    // header-top 小logo+登入
+    &-top {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 20px 40px;
+        z-index: 99990;
+        @include flex($jc: space-between);
+        .logo-s {
+            width: 13%;
+            opacity: 0;
+        }
+        .member {
+            width: 50px;
+            height: 50px;
+            @include bg(btn_user, png);
+            &:hover {
+                @include bg(btn_user_h, png);
+            }
+            &:active {
+                @include bg(btn_user_p, png);
+            }
+        }
+        .logo {
+            max-width: 140px;
+            margin: 0;
+            height: 100%;
+            display: none;
+        }
     }
 }
 
@@ -79,28 +111,37 @@
     }
 }
 
-// header-top 小logo+登入
-.header-top {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 20px 40px;
-    z-index: 99990;
-    @include flex($jc: space-between);
-    .logo-s {
-        width: 13%;
-        opacity: 0;
-    }
-    .number {
-        width: 50px;
-        height: 50px;
-        @include bg(btn_user, png);
-        &:hover {
-            @include bg(btn_user_h, png);
+@include pad {
+    .header {
+        &-main{
+            &.active {
+                .header-burger {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
         }
-        &:active {
-            @include bg(btn_user_p, png);
+        &-top {
+            background-color: $secondary;
+            padding: 10px 20px;
+            @include flex(center, space-between);
+            .logo {
+                display: block;
+                margin-right: 12px;
+            }
+            .logo-s {
+                opacity: 0;
+            }
+            .member {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        &-burger {
+            top: 2%;
+            right: -52px;
+            width: 40px;
+            height: 40px;
         }
     }
 }
@@ -116,7 +157,7 @@
         position: absolute;
         right: 0;
         bottom: 20px;
-        &-txt{
+        &-txt {
             text-align: center;
             color: $primary;
             font-size: $h5;
