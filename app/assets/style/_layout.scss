@@ -1,5 +1,5 @@
 // header-menu 左側選單
-.header-main{
+.header-main {
     height: 100vh;
     position: fixed;
     top: 0;
@@ -8,25 +8,25 @@
     z-index: 99999;
     transform: translateX(-100%);
     transition: all 0.5s 0.2s;
-    &.active{
+    &.active {
         transform: translateX(0%);
-        .header-buger{
+        .header-buger {
             @include bg(menu/btn_burger_close, png);
             position: absolute;
             width: 60px;
             height: 60px;
             background-size: contain;
-            &:hover{
+            &:hover {
                 @include bg(menu/btn_burger_close_h, png);
             }
         }
     }
-    &-box{
+    &-box {
         position: relative;
         width: 100%;
         height: 100vh;
     }
-    &::after{
+    &::after {
         content: "";
         position: absolute;
         top: 0;
@@ -37,7 +37,7 @@
     }
 }
 
-.header-buger{
+.header-buger {
     position: absolute;
     transition: all 0.5s 0.2s;
     top: 45%;
@@ -46,17 +46,17 @@
     height: 60px;
     @include cursor;
     @include bg(menu/btn_burger_open, png, center, center, no-repeat, contain);
-    &:hover{
+    &:hover {
         @include bg(menu/btn_burger_open_h, png, center, center, no-repeat, contain);
     }
 }
 
-.mobile-menu{
+.mobile-menu {
     margin: 40px 0 0 15px;
     transition: all 0.5s;
     height: 100%;
-    @include flex($ai:center, $flex-d: column);
-    &-item{
+    @include flex($ai: center, $flex-d: column);
+    &-item {
         margin-bottom: 40px;
         text-align: center;
         color: $secondary;
@@ -65,44 +65,61 @@
         font-weight: normal;
         line-height: 28.8px;
         padding: 0 5px;
-        @include flex($ai:center, $flex-d: column);
-        img{
+        @include flex($ai: center, $flex-d: column);
+        img {
             max-width: 60px;
             width: 100%;
             margin-bottom: 4px;
         }
-        &:hover{
-            img{
+        &:hover {
+            img {
                 filter: brightness(1.2);
             }
         }
     }
 }
 
-
 // header-top 小logo+登入
-.header-top{
+.header-top {
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     padding: 20px 40px;
     z-index: 99990;
-    @include flex($jc:space-between);
-    .logo-s{
+    @include flex($jc: space-between);
+    .logo-s {
         width: 13%;
         opacity: 0;
     }
-    .number{
+    .number {
         width: 50px;
         height: 50px;
         @include bg(btn_user, png);
-        &:hover{
+        &:hover {
             @include bg(btn_user_h, png);
         }
-        &:active{
-            @include bg(btn_user_p, png)
+        &:active {
+            @include bg(btn_user_p, png);
         }
     }
 }
 
+.footer {
+    position: fixed;
+    width: 100%;
+    height: 20%;
+    z-index: 99990;
+    right: 0;
+    bottom: 0;
+    &-join {
+        position: absolute;
+        right: 0;
+        bottom: 20px;
+        &-txt{
+            text-align: center;
+            color: $primary;
+            font-size: $h5;
+        }
+    }
+}
