@@ -25,7 +25,7 @@ $(function () {
   var blockStart = gsap.timeline({
     scrollTrigger: {
       trigger: ".section01",
-      // markers: true,
+      markers: true,
       pin: true,
       scrub: true
     }
