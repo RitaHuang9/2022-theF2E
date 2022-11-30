@@ -18,7 +18,7 @@ $(function () {
     isDesktop: `(min-width: ${breakPoint}px) and (prefers-reduced-motion: no-preference)`,
     isMobile: `(max-width: ${breakPoint - 1}px) and (prefers-reduced-motion: no-preference)`
   }, (context) => {
-    let {isDesktop, isMobile} = context.conditions;
+    let { isDesktop, isMobile } = context.conditions;
 
     // -------------------------------------------------------------------> TODO: 第一屏
     const cloud = gsap.timeline({
@@ -28,7 +28,6 @@ $(function () {
         scrub: true, //是否依賴視窗滾動
       },
     });
-    console.log(mm);
 
 
     cloud.to(['.cloud-left', '.cloud-right'], {
@@ -85,7 +84,7 @@ $(function () {
       }, '<')
 
       .to('.characters-person', {
-        height: isDesktop ? '30%' : '20%' ,
+        height: isDesktop ? '80%' : '70%',
         duration: 0.5,
       })
       .to('.characters-load', {
@@ -101,37 +100,61 @@ $(function () {
     const blockSecond = gsap.timeline({
       scrollTrigger: {
         trigger: ".section02",
-        // markers: true,
-        pin: true,
+        markers: true,
+        pin: isDesktop ? true : false,
         scrub: true,
       },
     });
 
-    blockSecond.to('.section02 .title-sub', {       //1. 大標題出現，角色縮小
-      opacity: 1,
-    })
-    blockSecond.from('.question-1', {               //3. question1-3 接續出現
-      xPercent: '-100',
-      opacity: 0,
-    })
-      .to(['.characters-decorate-l', '.characters-decorate-r'], {
-        width: '9%',
-        x: '-=3%',
-      }, '<')
-    blockSecond.to('.question-2', {
-      opacity: 1,
-    })
-      .to(['.characters-decorate-l', '.characters-decorate-r'], {
-        width: '7%',
-        x: '-=3%',
-      }, '<')
-    blockSecond.from('.question-3', {
-      xPercent: '100',
-      opacity: 0,
-    })
-      .to(['.characters-decorate-l', '.characters-decorate-r'], {
+    if (isDesktop) {
+      blockSecond.to('.section02 .title-sub', {       //1. 大標題出現，角色縮小
+        opacity: 1,
+      })
+      blockSecond.from('.question-1', {               //3. question1-3 接續出現
+        xPercent: '-100',
         opacity: 0,
-      }, '<')
+      })
+        .to(['.characters-decorate-l', '.characters-decorate-r'], {
+          width: '9%',
+          x: '-=3%',
+        }, '<')
+      blockSecond.to('.question-2', {
+        opacity: 1,
+      })
+        .to(['.characters-decorate-l', '.characters-decorate-r'], {
+          width: '7%',
+          x: '-=3%',
+        }, '<')
+      blockSecond.from('.question-3', {
+        xPercent: '100',
+        opacity: 0,
+      })
+        .to(['.characters-decorate-l', '.characters-decorate-r'], {
+          opacity: 0,
+        }, '<')
+    } else if (isMobile) {
+      blockSecond.to('.section02 .title-sub', {       //1. 大標題出現，角色縮小
+        opacity: 1,
+      })
+      blockSecond.from('.question-1', {               //3. question1-3 接續出現
+        xPercent: '-60',
+        opacity: 0,
+      },'<')
+      .to('.question-1', {
+        // xPercent: '-50',
+        opacity: 1,
+      })
+      blockSecond.to('.question-2', {
+        opacity: 1,
+      },'<')
+      blockSecond.from('.question-3', {
+        xPercent: '60',
+        opacity: 0,
+      },'<')
+      .to('.question-3', {
+        opacity: 1,
+      })
+    }
 
 
     // -------------------------------------------------------------------> TODO: 第三屏 [本屆主題：互動式網頁設計]
@@ -145,9 +168,11 @@ $(function () {
     });
 
     blockThird.to('.characters-person', {                 //1. 人物放大，大標、副標出現
-      height: '+=15%',
+      height: isDesktop ? '+=15%' : '-=3%',
     })
-      .to(['.section03 .title-sub', '.section03  .title-sub-content'], {
+
+    if(isDesktop){
+      blockThird.to(['.section03 .title-sub', '.section03  .title-sub-content'], {
         opacity: 1,
       })
       .to('.contestant', {
@@ -163,6 +188,41 @@ $(function () {
         opacity: 0,
         duration: 0.5,
       }, '<')
+    } else if(isMobile){
+      blockThird.to(['.section03 .title-sub', '.section03  .title-sub-content'], {
+        opacity: 1,
+      })
+      .to('.contestant' , {
+        yPercent: '-80',
+      })
+      .to('.contestant-box-f2e', {
+        opacity:1,
+      },'<')
+      .to('.contestant' , {
+        yPercent: '-105',
+      })
+      .to('.contestant-box-f2e', {
+        opacity:0,
+      },'<')
+      .to('.contestant-box-ui', {
+        opacity:1,
+      },'<')
+      .to('.contestant' , {
+        yPercent: '-135',
+      })
+      .to('.contestant-box-ui', {
+        opacity:0,
+      },'<')
+      .to('.contestant-box-team', {
+        opacity:1,
+      },'<')
+      .to('.contestant-box-team', {
+        opacity:0,
+      })
+      .to(['.section03 .title-sub', '.section03  .title-sub-content'], {
+        opacity: 0,
+      })
+    }
 
 
     // -------------------------------------------------------------------> TODO: 第四屏 [年度最強合作，三大主題來襲]
@@ -182,13 +242,13 @@ $(function () {
         opacity: 1,
       }, '<')
       .to('.project', {                     //1. WEEK1內容顯示
-        yPercent: '-65',
+        yPercent: isDesktop ? '-65' : '-90',
       })
       .to('.project-group-week1', {
         opacity: 1,
       }, '<')
       .to('.project', {                     //2. WEEK2內容顯示，WEEK1半透明
-        yPercent: '-95',
+        yPercent: '-120',
       })
       .to('.project-group-week1', {
         opacity: 0.2,
@@ -197,7 +257,7 @@ $(function () {
         opacity: 1,
       }, '<')
       .to('.project', {                     //3. WEEK3內容顯示，WEEK1消失，WEEK2半透明
-        yPercent: '-135',
+        yPercent: '-150',
       })
       .to('.project-group-week1', {
         opacity: 0,
@@ -241,55 +301,86 @@ $(function () {
       },
     });
 
-    blockFifth.to('.bg-mark', {         //1. 中間弧線從左至右顯示
-      opacity: 1,
-    })
-      .to('.actiity-line', {
+    if (isDesktop){
+      blockFifth.to('.bg-mark', {         //1. 中間弧線從左至右顯示
         opacity: 1,
       })
-      .to('.bg-mark', {
-        xPercent: '100',
-      }, '<1')
-      .to('.actiity-line-point1', {          //2.說明第一點從下往上顯示
+        .to('.actiity-line', {
+          opacity: 1,
+        })
+        .to('.bg-mark', {
+          xPercent: '100',
+        }, '<1')
+        .to('.actiity-line-point1', {          //2.說明第一點從下往上顯示
+          opacity: 1,
+          height: '120px',
+          duration: 2,
+        })
+        .to('.actiity-signup', {
+          opacity: 1,
+          yPercent: '-20',
+        }, '<')
+        .to('.actiity-line-point2', {          //3.說明第二點從下往上顯示
+          opacity: 1,
+          height: '70px',
+          duration: 2,
+        })
+        .to('.actiity-start', {
+          opacity: 1,
+          yPercent: '-20',
+        }, '<')
+        .to('.actiity-line-point3', {          //4.說明第三點從下往上顯示
+          opacity: 1,
+          height: '100px',
+          duration: 2,
+        })
+        .to('.actiity-upload', {
+          opacity: 1,
+          yPercent: '-20',
+        }, '<')
+        .to('.actiity-line', {                 //5.弧線消失，活動說明網上消失，人物放大
+          opacity: 0,
+        })
+        .to('.section05 .index-card', {
+          yPercent: '-20',
+          opacity: 0,
+        }, '<')
+        .to('.characters-person', {
+          height: '+=10%',
+        }, '<')
+        .to('.characters-load', {
+          width: '+=10%',
+        }, '<')
+    }else if(isMobile){
+      blockFifth.to('.section05 .title-sub', {
         opacity: 1,
-        height: '120px',
-        duration: 2,
+      })
+      .to('.actiity', {
+        yPercent: '-102',
       })
       .to('.actiity-signup', {
         opacity: 1,
-        yPercent: '-20',
       }, '<')
-      .to('.actiity-line-point2', {          //3.說明第二點從下往上顯示
-        opacity: 1,
-        height: '70px',
-        duration: 2,
+      .to('.actiity', {
+        yPercent: '-133',
       })
+      .to('.actiity-signup', {
+        opacity: 0,
+      }, '<')
       .to('.actiity-start', {
         opacity: 1,
-        yPercent: '-20',
       }, '<')
-      .to('.actiity-line-point3', {          //4.說明第三點從下往上顯示
-        opacity: 1,
-        height: '100px',
-        duration: 2,
+      .to('.actiity', {
+        yPercent: '-170',
       })
+      .to('.actiity-start', {
+        opacity: 0,
+      }, '<')
       .to('.actiity-upload', {
         opacity: 1,
-        yPercent: '-20',
       }, '<')
-      .to('.actiity-line', {                 //5.弧線消失，活動說明網上消失，人物放大
-        opacity: 0,
-      })
-      .to('.section05 .index-card', {
-        yPercent: '-20',
-        opacity: 0,
-      }, '<')
-      .to('.characters-person', {
-        height: '+=10%',
-      }, '<')
-      .to('.characters-load', {
-        width: '+=10%',
-      }, '<')
+    }
+    
 
 
     // -------------------------------------------------------------------> TODO: 第六屏 [獎項說明]
@@ -372,6 +463,9 @@ $(function () {
     blockSeventh.to('.section07 .title-sub', {
       opacity: 1,
     })
+      .to(['.characters-tree-left', '.characters-tree-right'], {
+        height: 'auto',
+      })
       .to(['.characters-tree-left', '.characters-tree-right'], {
         opacity: 1,
       })
@@ -502,7 +596,7 @@ $(function () {
         opacity: 0,
       })
 
-      return () => console.log("cleanup");
+    return () => console.log("cleanup");
   });
 
 

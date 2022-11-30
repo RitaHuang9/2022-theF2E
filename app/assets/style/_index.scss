@@ -3,7 +3,14 @@
     height: 100vh;
     position: fixed;
     width: 100vw;
-    // z-index: 5;
+    top: 0;
+    &-up {
+        height: 30vh;
+        bottom: 0;
+        position: fixed;
+        width: 100vw;
+        z-index: 99;
+    }
 }
 
 .railing {
@@ -85,6 +92,7 @@
         position: absolute;
         width: 100%;
         text-align: center;
+        padding-right: 28px;
     }
     &-frame {
         position: absolute;
@@ -138,14 +146,16 @@
     position: relative;
     @include flex(flex-end, center);
     &-person {
-        height: 50%;
+        height: 100%;
         object-fit: contain;
+        z-index: 99;
     }
     &-load {
         position: absolute;
         bottom: 0;
         z-index: -1;
         width: 63%;
+        z-index: 99;
     }
     &-decorate {
         &-l {
@@ -168,19 +178,19 @@
             position: absolute;
             left: 7%;
             bottom: -45px;
-            // transform: translate(-110%, 10%);
             width: 28%;
             z-index: -2;
             opacity: 0;
+            height: 100%;  //避免擋到第四屏的hover
         }
         &-right {
             position: absolute;
             left: 68%;
             bottom: -42px;
-            // transform: translate(114%, 10%);
             width: 30%;
             z-index: -2;
             opacity: 0;
+            height: 100%;
         }
     }
     &-finishLine {
@@ -206,7 +216,7 @@
 @include pad {
     .characters {
         &-person {
-            height: 25%;
+            height: 80%;
         }
     }
 }
@@ -220,7 +230,7 @@
 .section06,
 .section07,
 .sectionLast {
-    @include flex($flex-d: column);
+    // @include flex($flex-d: column);
     min-height: 600px;
     height: 100vh;
 }
@@ -241,11 +251,12 @@
     font-size: $h1;
     line-height: 40px;
     color: white;
+    max-width: 305px;
 }
 
 .job-title {
     @include flex($jc: space-between);
-    min-width: 600px;
+    max-width: 600px;
     margin: 50px auto 0;
     &-item {
         font-size: $h5;
@@ -274,20 +285,26 @@
 
 @include pad {
     .section01,
-    .section02,
     .section03,
     .section04,
     .section05,
     .section06,
     .section07,
     .sectionLast {
-        min-height: 800px;
+        height: 100vh !important;
+        min-height: 0;
+        padding-top: 85px !important;
+    }
+    .section02 {
+        padding-top: 100px !important;
+        min-height: 0;
+        height: 100%;
+        padding-bottom: 200px !important;
     }
     .section01 {
         .logo {
             height: auto;
             max-width: 250px;
-            margin-top: 100px;
             margin-bottom: 20px;
             content: url("../images/logo.png");
         }
@@ -298,6 +315,8 @@
         }
         .job-title {
             margin: 20px auto 0;
+            display: inline-block;
+            left: calc(50% - 200px);
             @include flex($ai: center, $flex-d: column);
             &-item {
                 margin-bottom: 15px;
@@ -311,8 +330,12 @@
 }
 
 // ---- TODO: Section02 ------------------------------------//
-.title-sub {
+.title-sub-box {
+    @include flex(center);
     height: 15%;
+}
+.title-sub {
+    height: 100%;
     position: relative;
     margin: 30px auto 0;
     opacity: 0;
@@ -353,6 +376,7 @@
         opacity: 0;
     }
 }
+
 .index-card {
     @include flex(center, space-between);
     width: 100%;
@@ -375,9 +399,13 @@
 }
 
 @include pad {
-    .title-sub {
-        margin: 85px 0 0;
+    .title-sub-box {
+        margin: 0 -20px 0;
         height: 10%;
+    }
+    .title-sub {
+        width: 100%;
+        margin: 10px auto 0;
         &-l,
         &-r {
             display: none;
@@ -388,6 +416,29 @@
             display: inline-block;
             width: 100%;
             text-align: center;
+            padding-bottom: 15px;
+        }
+    }
+    .index-card {
+        @include flex($ai: center, $flex-d: column);
+        &-item {
+            width: 60%;
+        }
+    }
+    .question {
+        &-1 {
+            .question-img {
+                content: url("../images/question_1_m.png");
+            }
+        }
+        &-3 {
+            .question-img {
+                content: url("../images/question_3_m.png");
+            }
+        }
+        &-title {
+            font-size: $h7;
+            line-height: 30px;
         }
     }
 }
@@ -396,19 +447,27 @@
 .contestant {
     max-width: 900px;
     opacity: 0;
+    &-box {
+        &:hover {
+            .contestant-group {
+                .contestant-hand {
+                    opacity: 1;
+                }
+                .contestant-btn {
+                    @include bg(btn_join_h, png);
+                }
+            }
+        }
+    }
     &-group {
         text-align: center;
         color: $primary;
         font-size: $h5;
         @include flex($ai: center, $flex-d: column);
-        &:hover {
-            .contestant-hand {
-                opacity: 1;
-            }
-            .contestant-btn {
-                @include bg(btn_join_h, png);
-            }
-        }
+    }
+    &-characters {
+        display: none;
+        max-width: 30%;
     }
     &-hand {
         @include bg(btn_joinHand, png, center, top, no-repeat, 45px);
@@ -440,10 +499,36 @@
     }
 }
 
+@include pad {
+    .contestant {
+        opacity: 1;
+        z-index: -1;
+        position: absolute;
+        left: 0;
+        transform: translateY(80%);
+        &-box {
+            opacity: 0;
+            @include flex(center, space-between);
+        }
+        .index-card-item {
+            margin-bottom: 40px;
+            &:nth-child(even) {
+                .contestant-box {
+                    @include flex(center, space-between, row-reverse);
+                }
+            }
+        }
+        &-characters {
+            display: block;
+        }
+    }
+}
+
 // ---- TODO: Section04 ------------------------------------//
 .project {
     position: absolute;
     z-index: -1;
+    left: 0;
     transform: translateY(100%);
     &-img {
         max-width: 230px;
@@ -454,7 +539,7 @@
     &-group {
         @include flex(center);
         width: 100%;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         opacity: 0;
         position: relative;
         z-index: 99;
@@ -504,6 +589,9 @@
 }
 
 // ---- TODO: Section05 ------------------------------------//
+.section05 .title-sub-box{
+    display: none;
+}
 .actiity {
     position: relative;
     z-index: -1;
@@ -606,6 +694,20 @@
     }
 }
 
+@include pad{
+    .section05 .title-sub-box{
+        display: block;
+    }
+    .actiity{
+        transform: translateY(100%);
+        &-line{
+            display: none;
+        }
+        .index-card {
+            @include flex($ai:center, $flex-d:column);
+        }
+    }
+}
 // ---- TODO: Section06 ------------------------------------//
 .awards {
     position: absolute;
@@ -675,6 +777,22 @@
     }
 }
 
+@include pad{
+    .awards{
+        width: 100%;
+        left: 0;
+        top: calc(50vh - 85px);
+        transform: translateX(0);
+        @include flex(center, center);
+        &-img-left {
+            display: none;
+        }
+        &-img-right {
+            display: none;
+        }
+    }
+}
+
 // ---- TODO: Section07 ------------------------------------//
 .sponsor {
     max-width: 1000px;
@@ -703,6 +821,7 @@
 .last {
     margin: auto;
     opacity: 0;
+    height: 100%;
     transform: translateY(20%);
     @include flex(center, center, column);
     &-img {

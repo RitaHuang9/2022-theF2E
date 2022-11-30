@@ -120,6 +120,9 @@
                     height: 40px;
                 }
             }
+            &::after{
+                display: none;
+            }
         }
         &-top {
             background-color: $secondary;
@@ -139,10 +142,14 @@
         }
         &-burger {
             top: 2%;
-            right: -52px;
+            right: -38px;
             width: 40px;
             height: 40px;
+            z-index: 99991;
         }
+    }
+    .mobile-menu{
+        margin: 40px 10px 0 10px;
     }
 }
 
